@@ -8,7 +8,5 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface Controller {
-    ViewModel processGet();
-
-    ViewModel processPost();
+    ViewModel process();
 }

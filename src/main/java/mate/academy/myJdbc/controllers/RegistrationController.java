@@ -4,12 +4,7 @@ import mate.academy.myJdbc.web.ViewModel;
 
 public class RegistrationController implements Controller {
     @Override
-    public ViewModel processGet() {
+    public ViewModel process() {
         return ViewModel.of("registration");
-    }
-
-    @Override
-    public ViewModel processPost() {
-        return null;
     }
 }

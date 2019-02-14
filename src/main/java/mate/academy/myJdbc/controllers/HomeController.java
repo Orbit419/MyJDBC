@@ -4,12 +4,7 @@ import mate.academy.myJdbc.web.ViewModel;
 
 public class HomeController implements Controller {
     @Override
-    public ViewModel processGet() {
+    public ViewModel process() {
         return ViewModel.of("home");
-    }
-
-    @Override
-    public ViewModel processPost() {
-        return null;
     }
 }

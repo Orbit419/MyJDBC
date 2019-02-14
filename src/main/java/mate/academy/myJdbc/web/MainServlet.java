@@ -24,22 +24,15 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Controller controller = getController(req);
-        ViewModel vm = controller.processGet();
+        String path = req.getServletPath() + req.getPathInfo();
+        Request request = Request.of(path, Request.RequestMethod.valueOf(req.getMethod()));
+        Controller controller = controllers.get(request);
+        ViewModel vm = controller.process();
         sendResponse(vm, req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Controller controller = getController(req);
-        ViewModel vm = controller.processPost();
-        sendResponse(vm, req, resp);
-    }
-
-    private Controller getController(HttpServletRequest req) {
-        String path = req.getServletPath() + req.getPathInfo();
-        Request request = Request.of(path, Request.RequestMethod.valueOf(req.getMethod()));
-        return controllers.get(request);
     }
 
     private void sendResponse(ViewModel vm, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
