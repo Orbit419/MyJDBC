@@ -9,6 +9,8 @@ public interface UserDao {
 
     User findById(Long id);
 
+    User findByToken(String token);
+
     void deleteById(Long id);
 
     void update(User user);
