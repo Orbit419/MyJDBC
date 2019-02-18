@@ -1,6 +1,8 @@
 package mate.academy.myJdbc.service;
 
 import mate.academy.myJdbc.model.User;
+import mate.academy.myJdbc.web.PasswordEncoder;
+import mate.academy.myJdbc.web.Request;
 
 public class SecurityServiceImpl implements SecurityService {
     private final UserService userService;
@@ -10,9 +12,16 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public boolean doLogin(String username, String password) {
-        User user = userService.findByUsername(username);
-        return user.getPassword().equals(password);
+    public User doLogin(Request request) {
+        String usernameInp = request.getParamByName("username");
+        String passwordInp = PasswordEncoder.encode(request.getParamByName("password"));
+        User user = userService.findByUsername(usernameInp);
+        if(user == null)
+            return null;
+        if(user.getPassword().equals(passwordInp))
+            return user;
+        else
+            return null;
     }
 
     @Override

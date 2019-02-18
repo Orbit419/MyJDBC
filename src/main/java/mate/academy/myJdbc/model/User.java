@@ -7,12 +7,22 @@ public class User {
     private String username;
     private String password;
     private String mail;
+    private String token;
 
-    public User(Long id, String username, String password, String mail) {
+    public User(Long id, String username, String password, String mail, String token) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.mail = mail;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Long getId() {
@@ -78,6 +88,7 @@ public class User {
         private String username;
         private String password;
         private String mail;
+        private String token;
 
         public Builder id(Long id) {
             this.id = id;
@@ -99,8 +110,13 @@ public class User {
             return this;
         }
 
+        public Builder token(String token) {
+            this.token = token;
+            return this;
+        }
+
         public User build() {
-            return new User(id, username, password, mail);
+            return new User(id, username, password, mail, token);
         }
     }
 }

@@ -1,12 +1,8 @@
 package mate.academy.myJdbc.controllers;
 
+import mate.academy.myJdbc.web.Request;
 import mate.academy.myJdbc.web.ViewModel;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 public interface Controller {
-    ViewModel process();
+    ViewModel process(Request request);
 }

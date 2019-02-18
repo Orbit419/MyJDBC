@@ -1,9 +1,10 @@
 package mate.academy.myJdbc.service;
 
 import mate.academy.myJdbc.model.User;
+import mate.academy.myJdbc.web.Request;
 
 public interface SecurityService {
-    boolean doLogin(String username, String password);
+    User doLogin(Request request);
 
     boolean doRegistration(User user);
 }
