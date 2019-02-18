@@ -39,11 +39,9 @@ public class MainServlet extends HttpServlet {
         String path = req.getServletPath() + req.getPathInfo();
         Map<String, String[]> parameterMap = req.getParameterMap();
         Request request = Request.of(path, Request.RequestMethod.valueOf(req.getMethod()), parameterMap);
-        request.setRequest(req);
-        request.setResponse(resp);
         Controller controller = controllers.get(request);
         ViewModel vm = controller.process(request);
-        if(!vm.getAllCookie().isEmpty()) {
+        if (!vm.getAllCookie().isEmpty()) {
             resp.addCookie(vm.getCookie());
         }
         sendResponse(vm, req, resp);

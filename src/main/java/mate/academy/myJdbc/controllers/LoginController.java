@@ -1,8 +1,11 @@
 package mate.academy.myJdbc.controllers;
 
+import mate.academy.myJdbc.model.User;
 import mate.academy.myJdbc.service.SecurityService;
 import mate.academy.myJdbc.web.Request;
 import mate.academy.myJdbc.web.ViewModel;
+
+import javax.servlet.http.Cookie;
 
 public class LoginController implements Controller {
     private SecurityService securityService;
@@ -13,6 +16,13 @@ public class LoginController implements Controller {
 
     @Override
     public ViewModel process(Request request) {
-        return securityService.doLogin(request);
+        User user = securityService.doLogin(request);
+        if (user == null)
+            return ViewModel.of("login");
+        String userToken = user.getToken();
+        Cookie cookie = new Cookie("MATE", userToken);
+        ViewModel vm = ViewModel.of("home");
+        vm.addCookie(cookie);
+        return vm;
     }
 }

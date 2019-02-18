@@ -24,33 +24,33 @@ public class UserFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse
-            , FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         Cookie[] cookies = req.getCookies();
         String token = null;
-        if(cookies.length > 0) {
-            for(Cookie c : cookies) {
-                if(c.getName().equals("MATE") && (c.getValue() != null && !c.getValue().equals(""))) {
+        if (cookies.length > 0) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("MATE") && (c.getValue() != null && !c.getValue().equals(""))) {
                     token = c.getValue();
                 }
             }
         }
 
         String path = req.getServletPath() + req.getPathInfo();
-        if(token == null) {
-            if(path.equals("/servlet/login") || path.equals("/servlet/registration")) {
+        if (token == null) {
+            if (path.equals("/servlet/login") || path.equals("/servlet/registration")) {
                 processAuthorized(req, resp, filterChain);
             } else {
                 processUnauthorized(req, resp);
             }
         } else {
             User user = userDao.findByToken(token);
-            if(user == null) {
+            if (user == null) {
                 processUnauthorized(req, resp);
             } else {
-                if(path.equals("/servlet/login") || path.equals("/servlet/registration")) {
+                if (path.equals("/servlet/login") || path.equals("/servlet/registration")) {
                     req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
                 }
                 processAuthorized(req, resp, filterChain);

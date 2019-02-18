@@ -10,8 +10,6 @@ public class Request {
     private String url;
     private RequestMethod method;
     private Map<String, String[]> parameterMap;
-    private HttpServletResponse response;
-    private HttpServletRequest request;
 
     public enum RequestMethod {
         GET,
@@ -46,22 +44,6 @@ public class Request {
 
     public void setParameterMap(Map<String, String[]> parameterMap) {
         this.parameterMap = parameterMap;
-    }
-
-    public HttpServletResponse getResponse() {
-        return response;
-    }
-
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
-
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
     }
 
     public static Request of(String url, RequestMethod method, Map map) {
