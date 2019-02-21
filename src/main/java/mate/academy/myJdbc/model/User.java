@@ -1,5 +1,7 @@
 package mate.academy.myJdbc.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class User {
@@ -8,6 +10,7 @@ public class User {
     private String password;
     private String mail;
     private String token;
+    private List<Role> roles = new ArrayList<>();
 
     public User(Long id, String username, String password, String mail, String token) {
         this.id = id;
@@ -15,6 +18,18 @@ public class User {
         this.password = password;
         this.mail = mail;
         this.token = token;
+    }
+
+    public void addRole(String role) {
+        roles.add(new Role(role));
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public String getToken() {
@@ -80,6 +95,8 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
+                ", token='" + token + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 

@@ -7,6 +7,8 @@ public interface UserService {
 
     User findById(Long id);
 
+    User findByToken(String token);
+
     User findByUsername(String username);
 
     void deleteById(Long id);

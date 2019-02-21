@@ -39,12 +39,15 @@ public class MainServlet extends HttpServlet {
         String path = req.getServletPath() + req.getPathInfo();
         Map<String, String[]> parameterMap = req.getParameterMap();
         Request request = Request.of(path, Request.RequestMethod.valueOf(req.getMethod()), parameterMap);
-        Controller controller = controllers.get(request);
+        Controller controller = controllers.getOrDefault(request,
+                regNotExist -> ViewModel.of("404"));
         ViewModel vm = controller.process(request);
         if (!vm.getAllCookie().isEmpty()) {
             resp.addCookie(vm.getCookie());
         }
-        sendResponse(vm, req, resp);
+        if (!vm.getView().equals("")) {
+            sendResponse(vm, req, resp);
+        }
     }
 
     private void sendResponse(ViewModel vm, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
