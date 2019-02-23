@@ -58,7 +58,7 @@ public class UserFilter implements Filter {
                 processUnauthorized(req, resp);
             } else {
                 if (path.equals("/servlet/login") || path.equals("/servlet/registration")) {
-                    resp.sendRedirect("/jdbcdemo_war_exploded/servlet/home");
+                    resp.sendRedirect("/servlet/home");
                 }
                 if (verifyRole(user, path)) {
                     processAuthorized(req, resp, filterChain);
@@ -82,7 +82,7 @@ public class UserFilter implements Filter {
     }
 
     private void processUnauthorized(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("/jdbcdemo_war_exploded/servlet/login");
+        resp.sendRedirect("/servlet/login");
     }
 
     private boolean verifyRole(User user, String path) {
@@ -98,5 +98,4 @@ public class UserFilter implements Filter {
         }
         return result;
     }
-
 }

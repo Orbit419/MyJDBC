@@ -38,11 +38,6 @@ public class RoleServiceImpl implements  RoleService {
     }
 
     @Override
-    public void addRoleToUser(Long userId, Long roleId) {
-        roleDao.addRoleToUser(userId, roleId);
-    }
-
-    @Override
     public void deleteAllRolesFromUser(Long userId) {
         roleDao.deleteAllRolesFromUser(userId);
     }

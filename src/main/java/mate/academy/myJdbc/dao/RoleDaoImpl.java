@@ -95,19 +95,6 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
     }
 
     @Override
-    public void addRoleToUser(Long userId, Long roleId) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO developing.user_role" +
-                    " VALUES (?, ?)");
-            statement.setLong(1, userId);
-            statement.setLong(2, roleId);
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void deleteAllRolesFromUser(Long userId) {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM developing.user_role" +

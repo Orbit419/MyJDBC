@@ -15,7 +15,5 @@ public interface RoleService {
 
     void delete(Long id);
 
-    void addRoleToUser(Long userId, Long roleId);
-
     void deleteAllRolesFromUser(Long userId);
 }
