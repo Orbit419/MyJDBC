@@ -24,6 +24,6 @@ public class RegistrationController implements Controller {
                 .build();
         System.out.println(user);
         securityService.doRegistration(user);
-        return ViewModel.of("login");
+        return ViewModel.of("registrationSuccess");
     }
 }
