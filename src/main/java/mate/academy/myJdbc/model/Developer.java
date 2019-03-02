@@ -8,8 +8,8 @@ public class Developer {
     private String name;
     private int age;
     private int salary;
-    Set<Skill> skills = new HashSet<>();
-    Set<Project> projects = new HashSet<>();
+    private Set<Skill> skills = new HashSet<>();
+    private Set<Project> projects = new HashSet<>();
 
     public Developer(int id, String name, int age, int salary) {
         this.id = id;

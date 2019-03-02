@@ -120,19 +120,6 @@ public class ProjectDaoImpl extends AbstractDao implements ProjectDao{
                     .setCost(rs.getInt("project_cost"))
                     .setBirthday(rs.getDate("project_birthday"))
                     .build();
-
-            statement = connection.prepareStatement("SELECT developers.developer_id, developers.developer_name, developers.developer_age, developers.developer_salary, projects.project_id\n" +
-                    "FROM developers\n" +
-                    "JOIN projects_developers ON (developers.developer_id = projects_developers.developer_id)\n" +
-                    "JOIN projects ON (projects.project_id = projects_developers.project_id)\n" +
-                    "HAVING project_id = ?;");
-            statement.setInt(1, id);
-            rs = statement.executeQuery();
-            while(rs.next()) {
-                Developer developer = getDeveloper(rs);
-                project.addDeveloper(developer);
-            }
-
             return project;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -191,22 +178,29 @@ public class ProjectDaoImpl extends AbstractDao implements ProjectDao{
         statement.execute();
     }
 
-    public void getProjectsForDeveloper(Developer developer) {
+    @Override
+    public Set<Project> getProjectsByDeveloperId(int id) {
+        Set<Project> set = new HashSet<>();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT projects.project_id, projects.project_name, projects.project_cost, projects.project_birthday, developers.developer_id\n" +
                     "FROM projects\n" +
                     "JOIN projects_developers ON (projects.project_id = projects_developers.project_id)\n" +
                     "JOIN developers ON (developers.developer_id = projects_developers.developer_id)\n" +
                     "HAVING developer_id = ?;");
-            statement.setInt(1, developer.getId());
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Project project = new Project.Builder().setId(rs.getInt("project_id")).setBirthday(rs.getDate("project_birthday")).setName(rs.getString("project_name")).build();
-                developer.addProject(project);
+                Project project = new Project.Builder()
+                        .setId(rs.getInt("project_id"))
+                        .setBirthday(rs.getDate("project_birthday"))
+                        .setName(rs.getString("project_name"))
+                        .build();
+                set.add(project);
             }
+            return set;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package mate.academy.myJdbc.service;
 
+import mate.academy.myJdbc.dao.DeveloperDao;
 import mate.academy.myJdbc.dao.ProjectDao;
 import mate.academy.myJdbc.model.Developer;
 import mate.academy.myJdbc.model.Project;
@@ -7,9 +8,11 @@ import mate.academy.myJdbc.model.Project;
 import java.util.Set;
 
 public class ProjectServiceImpl implements ProjectService {
+    private final DeveloperDao developerDao;
     private final ProjectDao projectDao;
 
-    public ProjectServiceImpl(ProjectDao projectDao) {
+    public ProjectServiceImpl(DeveloperDao developerDao, ProjectDao projectDao) {
+        this.developerDao = developerDao;
         this.projectDao = projectDao;
     }
 
@@ -32,7 +35,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project findProject(int id) {
-        return projectDao.findProject(id);
+        Project project = projectDao.findProject(id);
+        project.setDevelopers(developerDao.getDevelopersByProjectId(id));
+        return project;
     }
 
     @Override

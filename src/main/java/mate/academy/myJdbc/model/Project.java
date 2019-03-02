@@ -20,6 +20,18 @@ public class Project {
         this.countDevs = countDevs;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public void setDevelopers(Set<Developer> developers) {
+        this.developers = developers;
+    }
+
     public static class Builder {
         private int id;
         private Date birthday;

@@ -1,15 +1,14 @@
 package mate.academy.myJdbc;
 
-import mate.academy.myJdbc.dao.DeveloperDao;
-import mate.academy.myJdbc.dao.DeveloperDaoImpl;
-import mate.academy.myJdbc.dao.ProjectDaoImpl;
+import mate.academy.myJdbc.config.Factory;
 import mate.academy.myJdbc.model.Developer;
 import mate.academy.myJdbc.model.Project;
 import mate.academy.myJdbc.model.Skill;
+import mate.academy.myJdbc.model.User;
 import mate.academy.myJdbc.service.DeveloperService;
-import mate.academy.myJdbc.service.DeveloperServiceImpl;
 import mate.academy.myJdbc.service.ProjectService;
-import mate.academy.myJdbc.service.ProjectServiceImpl;
+import mate.academy.myJdbc.service.RoleService;
+import mate.academy.myJdbc.service.UserService;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,9 +17,17 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
         Connection connection = MyConnectionUtil.getConnection();
-        DeveloperService developerService = new DeveloperServiceImpl(new DeveloperDaoImpl(connection));
-        ProjectService projectService = new ProjectServiceImpl(new ProjectDaoImpl(connection));
+        DeveloperService developerService = ServiceUtil.getDeveloperService();
+        ProjectService projectService = ServiceUtil.getProjectService();
+        RoleService roleService = Factory.getRoleService();
+        UserService userService = Factory.getUserService();
 
+//        System.out.println(developerService.findDeveloper(1));
+//        System.out.println(projectService.findProject(1));
+//
+//        User user = userService.findById(8L);
+//        System.out.println(user.toString());
+//
 //        System.out.println("Sum of developers salary for project Astra is: "
 //                + projectService.getSumSalaryForProject("Astra"));
 //
@@ -53,12 +60,12 @@ public class Main {
 //        Project project = new Project.Builder().setName("Aqua").build();
 //        dev2.addProject(project);
 //        developerService.updateDeveloper(dev2);
-
-//        developerService.delete(8);
-
+//
+//        developerService.deleteDeveloper(8);
+//
 //        Developer findedDeveloper = developerService.findDeveloper(1);
 //        System.out.println(findedDeveloper);
-
+//
 //        Developer dev2 = new Developer(5, "Ivan", 33, 9000);
 //        Project project = new Project
 //                .Builder()
@@ -68,14 +75,14 @@ public class Main {
 //                .build();
 //        project.addDeveloper(dev2);
 //        projectService.addProject(project);
-
+//
 //        Project project = projectService.findProject(2);
 //        System.out.println(project);
-
+//
 //        Project project = projectService.findProject(2);
 //        project.setName("Astartes");
 //        projectService.updateProject(project);
-
-//        projectService.delete(4);
+//
+//        projectService.deleteProject(4);
     }
 }
