@@ -1,6 +1,6 @@
 package mate.academy.myJdbc.web;
 
-import mate.academy.myJdbc.config.Factory;
+import mate.academy.myJdbc.util.ServletsFactory;
 import mate.academy.myJdbc.controllers.Controller;
 
 import javax.servlet.ServletException;
@@ -16,11 +16,11 @@ public class MainServlet extends HttpServlet {
 
     static {
         controllers.put(Request.of("/servlet/login", Request.RequestMethod.GET), r -> ViewModel.of("login"));
-        controllers.put(Request.of("/servlet/login", Request.RequestMethod.POST), Factory.getLoginController());
-        controllers.put(Request.of("/servlet/registration", Request.RequestMethod.POST), Factory.getRegistrationController());
+        controllers.put(Request.of("/servlet/login", Request.RequestMethod.POST), ServletsFactory.getLoginController());
+        controllers.put(Request.of("/servlet/registration", Request.RequestMethod.POST), ServletsFactory.getRegistrationController());
         controllers.put(Request.of("/servlet/registration", Request.RequestMethod.GET), r -> ViewModel.of("registration"));
         controllers.put(Request.of("/servlet/logout", Request.RequestMethod.GET), r -> ViewModel.of("logout"));
-        controllers.put(Request.of("/servlet/logout\"", Request.RequestMethod.POST), Factory.getLogoutController());
+        controllers.put(Request.of("/servlet/logout\"", Request.RequestMethod.POST), ServletsFactory.getLogoutController());
         controllers.put(Request.of("/servlet/home", Request.RequestMethod.GET), r -> ViewModel.of("home"));
     }
 

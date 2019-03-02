@@ -1,7 +1,6 @@
 package mate.academy.myJdbc.web.filters;
 
-import mate.academy.myJdbc.config.Factory;
-import mate.academy.myJdbc.dao.UserDao;
+import mate.academy.myJdbc.util.ServletsFactory;
 import mate.academy.myJdbc.model.Role;
 import mate.academy.myJdbc.model.User;
 import mate.academy.myJdbc.service.UserService;
@@ -26,7 +25,7 @@ public class UserFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        userService = Factory.getUserService();
+        userService = ServletsFactory.getUserService();
         protectedUrls.put("/servlet/home", "ADMIN");
     }
 

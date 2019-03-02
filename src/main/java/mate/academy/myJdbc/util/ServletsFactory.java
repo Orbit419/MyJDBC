@@ -1,4 +1,4 @@
-package mate.academy.myJdbc.config;
+package mate.academy.myJdbc.util;
 
 import mate.academy.myJdbc.MyConnectionUtil;
 import mate.academy.myJdbc.controllers.LoginController;
@@ -17,14 +17,14 @@ import mate.academy.myJdbc.service.UserServiceImpl;
 
 import java.sql.Connection;
 
-public class Factory {
+public class ServletsFactory {
     private final static Connection connection;
 
     static {
         connection = MyConnectionUtil.getConnection();
     }
 
-    private Factory(){}
+    private ServletsFactory(){}
 
     public static RegistrationController getRegistrationController() {
         return new RegistrationController(getSecurityService());
