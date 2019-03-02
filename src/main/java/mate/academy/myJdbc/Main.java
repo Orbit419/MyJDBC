@@ -1,26 +1,18 @@
 package mate.academy.myJdbc;
 
-import mate.academy.myJdbc.config.Factory;
-import mate.academy.myJdbc.model.Developer;
-import mate.academy.myJdbc.model.Project;
-import mate.academy.myJdbc.model.Skill;
-import mate.academy.myJdbc.model.User;
 import mate.academy.myJdbc.service.DeveloperService;
 import mate.academy.myJdbc.service.ProjectService;
 import mate.academy.myJdbc.service.RoleService;
 import mate.academy.myJdbc.service.UserService;
-
-import java.sql.Connection;
-import java.sql.Date;
-import java.util.Set;
+import mate.academy.myJdbc.util.JdbcFactory;
+import mate.academy.myJdbc.util.ServletsFactory;
 
 public class Main {
     public static void main(String[] args) {
-        Connection connection = MyConnectionUtil.getConnection();
-        DeveloperService developerService = ServiceUtil.getDeveloperService();
-        ProjectService projectService = ServiceUtil.getProjectService();
-        RoleService roleService = Factory.getRoleService();
-        UserService userService = Factory.getUserService();
+        DeveloperService developerService = JdbcFactory.getDeveloperService();
+        ProjectService projectService = JdbcFactory.getProjectService();
+        RoleService roleService = ServletsFactory.getRoleService();
+        UserService userService = ServletsFactory.getUserService();
 
 //        System.out.println(developerService.findDeveloper(1));
 //        System.out.println(projectService.findProject(1));
