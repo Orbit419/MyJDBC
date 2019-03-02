@@ -30,4 +30,6 @@ public interface DeveloperDao {
     void deleteDeveloperSkillRelations(int id);
 
     void deleteDeveloperProjectRelations(int id);
+
+    Set<Developer> getDevelopersByProjectId(int id);
 }

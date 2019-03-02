@@ -2,15 +2,21 @@ package mate.academy.myJdbc.service;
 
 import mate.academy.myJdbc.dao.DeveloperDao;
 import mate.academy.myJdbc.dao.DeveloperDaoImpl;
+import mate.academy.myJdbc.dao.ProjectDao;
+import mate.academy.myJdbc.dao.SkillDao;
 import mate.academy.myJdbc.model.Developer;
 
 import java.util.Objects;
 import java.util.Set;
 
 public class DeveloperServiceImpl implements DeveloperService {
+    private final ProjectDao projectDao;
+    private final SkillDao skillDao;
     private final DeveloperDao developerDao;
 
-    public DeveloperServiceImpl(DeveloperDaoImpl developerDao) {
+    public DeveloperServiceImpl(ProjectDao projectDao, SkillDao skillDao, DeveloperDao developerDao) {
+        this.projectDao = projectDao;
+        this.skillDao = skillDao;
         this.developerDao = developerDao;
     }
 
@@ -35,7 +41,10 @@ public class DeveloperServiceImpl implements DeveloperService {
 
     @Override
     public Developer findDeveloper(int id) {
-        return developerDao.findDeveloper(id);
+        Developer developer = developerDao.findDeveloper(id);
+        developer.setSkills(skillDao.getSkillsByDeveloperId(id));
+        developer.setProjects(projectDao.getProjectsByDeveloperId(id));
+        return developer;
     }
 
     @Override

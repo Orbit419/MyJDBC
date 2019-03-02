@@ -19,4 +19,6 @@ public interface ProjectDao {
     void updateProject(Project project);
 
     void delete(Integer id);
+
+    Set<Project> getProjectsByDeveloperId(int id);
 }

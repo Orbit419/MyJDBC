@@ -90,33 +90,18 @@ public class DeveloperDaoImpl extends AbstractDao implements DeveloperDao {
             rs.next();
             Developer developer = getDeveloper(rs);
 
-            //add skills to developer
-            statement = connection.prepareStatement("SELECT skills.skill_id, skills.skill_branch, skills.skill_level, developers.developer_id\n" +
-                    "FROM skills\n" +
-                    "JOIN developers_skills ON (skills.skill_id = developers_skills.skill_id)\n" +
-                    "JOIN developers ON (developers.developer_id = developers_skills.developer_id)\n" +
+
+            statement = connection.prepareStatement("SELECT projects.project_id, projects.project_name, projects.project_cost, projects.project_birthday, developers.developer_id\n" +
+                    "FROM projects\n" +
+                    "JOIN projects_developers ON (projects.project_id = projects_developers.project_id)\n" +
+                    "JOIN developers ON (developers.developer_id = projects_developers.developer_id)\n" +
                     "HAVING developer_id = ?;");
             statement.setInt(1, id);
             rs = statement.executeQuery();
             while (rs.next()) {
-                Skill skill = new Skill(rs.getInt("skill_id"),
-                        rs.getString("skill_branch"),
-                        rs.getString("skill_level"));
-                developer.addSkill(skill);
+                Project project = new Project.Builder().setId(rs.getInt("project_id")).setBirthday(rs.getDate("project_birthday")).setName(rs.getString("project_name")).build();
+                developer.addProject(project);
             }
-
-            //add projects to developer
-//            statement = connection.prepareStatement("SELECT projects.project_id, projects.project_name, projects.project_cost, projects.project_birthday, developers.developer_id\n" +
-//                    "FROM projects\n" +
-//                    "JOIN projects_developers ON (projects.project_id = projects_developers.project_id)\n" +
-//                    "JOIN developers ON (developers.developer_id = projects_developers.developer_id)\n" +
-//                    "HAVING developer_id = ?;");
-//            statement.setInt(1, id);
-//            rs = statement.executeQuery();
-//            while (rs.next()) {
-//                Project project = new Project.Builder().setId(rs.getInt("project_id")).setBirthday(rs.getDate("project_birthday")).setName(rs.getString("project_name")).build();
-//                developer.addProject(project);
-//            }
 
             return developer;
         } catch (SQLException e) {
@@ -236,5 +221,27 @@ public class DeveloperDaoImpl extends AbstractDao implements DeveloperDao {
                 rs.getInt("developer_age"),
                 rs.getInt("developer_salary"));
         return developer;
+    }
+
+    public Set<Developer> getDevelopersByProjectId(int id) {
+        Set<Developer> set = new HashSet<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement("SELECT developers.developer_id, developers.developer_name, developers.developer_age, developers.developer_salary, projects.project_id\n" +
+                    "FROM developers\n" +
+                    "JOIN projects_developers ON (developers.developer_id = projects_developers.developer_id)\n" +
+                    "JOIN projects ON (projects.project_id = projects_developers.project_id)\n" +
+                    "HAVING project_id = ?;");
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Developer developer = getDeveloper(rs);
+                set.add(developer);
+            }
+            return set;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
